@@ -279,7 +279,123 @@ mp.savefig('fig6.pdf', dpi = 300, bbox_inches = 'tight', format = 'pdf')
 
 
 
-# Figure Sup. 1 (Simulations of colonization: limited migration)
+# Figure Sup. 1 (Simulations vs. model: probability of microbe-free hosts)
+
+# Indicate the observable
+
+c_p = 'pN'
+
+c_t = 'empty-space'
+
+y_label = r'$P[x_0 > (N-1)/N]$'
+
+# Initialize figure
+
+fig, axes = mp.subplots(nrows = 1, ncols = 2, figsize = (8, 4))
+
+# Compute figure
+
+axes[0] = fig_simvsmodel(axes[0], r'slow  prolif. ($\mathbf{\alpha_{0} = 0.0}$)', 'A', True, '../data/numerics/N_10000_p_0._q_1._a_0./', 'a0.0e+00', c_p, c_t, y_label)
+
+axes[1] = fig_simvsmodel(axes[1], r'fast prolif. ($\mathbf{\alpha_{0} = -0.9}$)', 'B', False, '../data/numerics/N_10000_p_0._q_1._a_-0.9/', 'a-9.0e-01', c_p, c_t, y_label)
+
+# Add text labels including colorcode
+
+colors = ['brown','red','orange','gold','green','blue','turquoise']
+
+leg_labels = [r'$m = 10^{%i}$'%i for i in range(-7,0,1)]
+
+for i in range(7): axes[0].text(1E-6, 0.2+0.05*i, leg_labels[i], ha = 'center', va = 'center', fontsize = 14, color = colors[i])
+
+for i in range(7): axes[1].text(1E-6, 0.2+0.05*i, leg_labels[i], ha = 'center', va = 'center', fontsize = 14, color = colors[i])
+
+# Set separation between panels
+
+mp.subplots_adjust(bottom = 0.0, top = 1.0, left = 0.0, right = 1.0, wspace = 0.03)
+
+# Save figure
+
+mp.savefig('figsup1.pdf', dpi = 300, bbox_inches = 'tight', format = 'pdf')
+
+
+
+# Figure Sup. 2 (Simulations vs. model: probability of full colonization)
+
+# Indicate the observable
+
+c_p = 'p0'
+
+c_t = 'empty-space'
+
+y_label = r'$P[x_0 < 1/N]$'
+
+# Initialize figure
+
+fig, axes = mp.subplots(nrows = 1, ncols = 2, figsize = (8, 4))
+
+# Compute figure
+
+axes[0] = fig_simvsmodel(axes[0], r'slow prolif. ($\mathbf{\alpha_{0} = 0.0}$)', 'A', True, '../data/numerics/N_10000_p_0._q_1._a_0./', 'a0.0e+00', c_p, c_t, y_label)
+
+axes[1] = fig_simvsmodel(axes[1], r'fast prolif. ($\mathbf{\alpha_{0} = -0.9}$)', 'B', False, '../data/numerics/N_10000_p_0._q_1._a_-0.9/', 'a-9.0e-01', c_p, c_t, y_label)
+
+# Add text labels including colorcode
+
+colors = ['brown','red','orange','gold','green','blue','turquoise']
+
+leg_labels = [r'$m = 10^{%i}$'%i for i in range(-7,0,1)]
+
+for i in range(7): axes[0].text(1E-4, 0.25+0.05*i, leg_labels[i], ha = 'center', va = 'center', fontsize = 14, color = colors[i])
+
+for i in range(7): axes[1].text(1E-4, 0.45+0.05*i, leg_labels[i], ha = 'center', va = 'center', fontsize = 14, color = colors[i])
+
+# Set separation between panels
+
+mp.subplots_adjust(bottom = 0.0, top = 1.0, left = 0.0, right = 1.0, wspace = 0.03)
+
+# Save figure
+
+mp.savefig('figsup2.pdf', dpi = 300, bbox_inches = 'tight', format = 'pdf')
+
+
+
+# Figure Sup. 3 (Simulations vs. model: probability of colonization of taxon 1)
+
+# Indicate the observable
+
+c_p = 'p1N'
+
+c_t = 'taxa'
+
+y_label = r'$P[x_1 \geq 1/N]$'
+
+# Initialize figure
+
+fig, axes = mp.subplots(nrows = 1, ncols = 1, figsize = (4, 4))
+
+# Compute figure
+
+axes = fig_simvsmodel(axes, r'$\mathbf{p_1 = 0.5}$', '', True, '../data/numerics/N_10000_p_0.5_q_0._a_0./', 'a0.0e+00', c_p, c_t, y_label)
+
+# Add text labels including colorcode
+
+colors = ['brown','red','orange','gold','green','blue','turquoise']
+
+leg_labels = [r'$m = 10^{%i}$'%i for i in range(-7,0,1)]
+
+for i in range(7): axes.text(2E-6, 0.25+0.05*i, leg_labels[i], ha = 'center', va = 'center', fontsize = 14, color = colors[i])
+
+# Set separation between panels
+
+mp.subplots_adjust(bottom = 0.0, top = 1.0, left = 0.0, right = 1.0, wspace = 0.03, hspace = 0.02)
+
+# Save figure
+
+mp.savefig('figsup3.pdf', dpi = 300, bbox_inches = 'tight', format = 'pdf')
+
+
+
+# Figure Sup. 4 (Simulations of colonization: limited migration)
 
 # Initialize figure
 
@@ -321,11 +437,11 @@ cbar.set_label('Simulation timesteps ($\cdot 10^7$)',fontsize = 16)
 
 # Save figure
 
-mp.savefig('figsup1.pdf', dpi = 300, bbox_inches = 'tight', format = 'pdf')
+mp.savefig('figsup4.pdf', dpi = 300, bbox_inches = 'tight', format = 'pdf')
 
 
 
-# Figure Sup. 2 (Probability of full colonization: smaller microbiome size)
+# Figure Sup. 5 (Probability of full colonization: smaller microbiome size)
 
 # Indicate the observable
 
@@ -359,11 +475,11 @@ fig.subplots_adjust(bottom = 0.0, top = 1.0, left = 0.0, right = 1.0, wspace = 0
 
 # Save figure
 
-mp.savefig('figsup2.pdf', dpi = 300, bbox_inches = 'tight', format = 'pdf')
+mp.savefig('figsup5.pdf', dpi = 300, bbox_inches = 'tight', format = 'pdf')
 
 
 
-# Figure Sup. 3 (Probability of microbe-free hosts)
+# Figure Sup. 6 (Probability of microbe-free hosts)
 
 # Indicate the observable
 
@@ -397,127 +513,61 @@ fig.subplots_adjust(bottom = 0.0, top = 1.0, left = 0.0, right = 1.0, wspace = 0
 
 # Save figure
 
-mp.savefig('figsup3.pdf', dpi = 300, bbox_inches = 'tight', format = 'pdf')
-
-
-
-# Figure Sup. 4 (Simulations vs. model: probability of microbe-free hosts)
-
-# Indicate the observable
-
-c_p = 'pN'
-
-c_t = 'empty-space'
-
-y_label = r'$P[x_0 > (N-1)/N]$'
-
-# Initialize figure
-
-fig, axes = mp.subplots(nrows = 1, ncols = 2, figsize = (8, 4))
-
-# Compute figure
-
-axes[0] = fig_simvsmodel(axes[0], r'slow  prolif. ($\mathbf{\alpha_{0} = 0.0}$)', 'A', True, '../data/numerics/N_10000_p_0._q_1._a_0./', 'a0.0e+00', c_p, c_t, y_label)
-
-axes[1] = fig_simvsmodel(axes[1], r'fast prolif. ($\mathbf{\alpha_{0} = -0.9}$)', 'B', False, '../data/numerics/N_10000_p_0._q_1._a_-0.9/', 'a-9.0e-01', c_p, c_t, y_label)
-
-# Add text labels including colorcode
-
-colors = ['brown','red','orange','gold','green','blue','turquoise']
-
-leg_labels = [r'$m = 10^{%i}$'%i for i in range(-7,0,1)]
-
-for i in range(7): axes[0].text(1E-6, 0.2+0.05*i, leg_labels[i], ha = 'center', va = 'center', fontsize = 14, color = colors[i])
-
-for i in range(7): axes[1].text(1E-6, 0.2+0.05*i, leg_labels[i], ha = 'center', va = 'center', fontsize = 14, color = colors[i])
-
-# Set separation between panels
-
-mp.subplots_adjust(bottom = 0.0, top = 1.0, left = 0.0, right = 1.0, wspace = 0.03)
-
-# Save figure
-
-mp.savefig('figsup4.pdf', dpi = 300, bbox_inches = 'tight', format = 'pdf')
-
-
-
-# Figure Sup. 5 (Simulations vs. model: probability of full colonization)
-
-# Indicate the observable
-
-c_p = 'p0'
-
-c_t = 'empty-space'
-
-y_label = r'$P[x_0 < 1/N]$'
-
-# Initialize figure
-
-fig, axes = mp.subplots(nrows = 1, ncols = 2, figsize = (8, 4))
-
-# Compute figure
-
-axes[0] = fig_simvsmodel(axes[0], r'slow prolif. ($\mathbf{\alpha_{0} = 0.0}$)', 'A', True, '../data/numerics/N_10000_p_0._q_1._a_0./', 'a0.0e+00', c_p, c_t, y_label)
-
-axes[1] = fig_simvsmodel(axes[1], r'fast prolif. ($\mathbf{\alpha_{0} = -0.9}$)', 'B', False, '../data/numerics/N_10000_p_0._q_1._a_-0.9/', 'a-9.0e-01', c_p, c_t, y_label)
-
-# Add text labels including colorcode
-
-colors = ['brown','red','orange','gold','green','blue','turquoise']
-
-leg_labels = [r'$m = 10^{%i}$'%i for i in range(-7,0,1)]
-
-for i in range(7): axes[0].text(1E-4, 0.25+0.05*i, leg_labels[i], ha = 'center', va = 'center', fontsize = 14, color = colors[i])
-
-for i in range(7): axes[1].text(1E-4, 0.45+0.05*i, leg_labels[i], ha = 'center', va = 'center', fontsize = 14, color = colors[i])
-
-# Set separation between panels
-
-mp.subplots_adjust(bottom = 0.0, top = 1.0, left = 0.0, right = 1.0, wspace = 0.03)
-
-# Save figure
-
-mp.savefig('figsup5.pdf', dpi = 300, bbox_inches = 'tight', format = 'pdf')
-
-
-
-# Figure Sup. 6 (Simulations vs. model: probability of colonization of taxon 1)
-
-# Indicate the observable
-
-c_p = 'p1N'
-
-c_t = 'taxa'
-
-y_label = r'$P[x_1 \geq 1/N]$'
-
-# Initialize figure
-
-fig, axes = mp.subplots(nrows = 1, ncols = 1, figsize = (4, 4))
-
-# Compute figure
-
-axes = fig_simvsmodel(axes, r'$\mathbf{p_1 = 0.5}$', '', True, '../data/numerics/N_10000_p_0.5_q_0._a_0./', 'a0.0e+00', c_p, c_t, y_label)
-
-# Add text labels including colorcode
-
-colors = ['brown','red','orange','gold','green','blue','turquoise']
-
-leg_labels = [r'$m = 10^{%i}$'%i for i in range(-7,0,1)]
-
-for i in range(7): axes.text(2E-6, 0.25+0.05*i, leg_labels[i], ha = 'center', va = 'center', fontsize = 14, color = colors[i])
-
-# Set separation between panels
-
-mp.subplots_adjust(bottom = 0.0, top = 1.0, left = 0.0, right = 1.0, wspace = 0.03, hspace = 0.02)
-
-# Save figure
-
 mp.savefig('figsup6.pdf', dpi = 300, bbox_inches = 'tight', format = 'pdf')
 
 
 
-# Figure Sup. 7 (Probability of colonization of taxon 1 as a function of p)
+# Figure Sup. 7 (Probability density of a microbial taxon)
+
+# Initialize figure
+
+fig, axes = mp.subplots(nrows = 1, ncols = 3, figsize = (8, 4))
+
+# Compute figure
+
+axes[0] = fig_dist(axes[0], r'$\mathbf{p_1 = 1.0}$', 'A', True, '../../data/numerics/N_10000_p_1._q_0._a_0./')
+
+axes[1] = fig_dist(axes[1], r'$\mathbf{p_1 = 0.5}$', 'B', False, '../../data/numerics/N_10000_p_0.5_q_0._a_0./')
+
+axes[2] = fig_dist(axes[2], r'$\mathbf{p_1 = 0.1}$', 'C', False, '../../data/numerics/N_10000_p_0.1_q_0._a_0./')
+
+# Set aspect ratio of axes
+
+axes[0].set_aspect(20./40)
+
+axes[1].set_aspect(20./40)
+
+axes[2].set_aspect(20./40)
+
+# Include colorbar to indicate the probability density
+
+fig.subplots_adjust(bottom = 0.13, top = 1.0, left = 0.0, right = 1.0, wspace = 0.03, hspace = 0.0)
+
+cb_ax = fig.add_axes([0.0, 0.0, 1.0, 0.04])
+
+cb_ax.axis('off')
+
+img = cb_ax.imshow(np.array([[-9,0]]), cmap = mp.cm.jet)
+
+img.set_visible(False)
+
+cb_ax.set_aspect('auto')
+
+cbar = fig.colorbar(img, orientation = "horizontal", ax = cb_ax, fraction = 1.0)
+
+cbar.ax.tick_params(labelsize = 12)
+
+cbar.ax.set_xticklabels([r'$10^{-8}$',r'$10^{-6}$',r'$10^{-4}$',r'$10^{-2}$','$1$'])
+
+cbar.set_label('Probability density ($\Phi_1[x_1]$)',fontsize = 16)
+
+# Save figure
+
+mp.savefig('figsup7.png', dpi = 300, bbox_inches = 'tight', format = 'png')
+
+
+
+# Figure Sup. 8 (Probability of colonization of taxon 1 as a function of p)
 
 # Indicate the observable
 
@@ -555,4 +605,4 @@ mp.subplots_adjust(bottom = 0.0, top = 1.0, left = 0.0, right = 1.0, wspace = 0.
 
 # Save figure
 
-mp.savefig('figsup7.pdf', dpi = 300, bbox_inches = 'tight', format = 'pdf')
+mp.savefig('figsup8.pdf', dpi = 300, bbox_inches = 'tight', format = 'pdf')

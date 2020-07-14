@@ -340,7 +340,7 @@ def fig_p(ax, title_text, label_text, y_axis, data, c_p, c_levels, c_levels_labe
 
     # Plot the probability
 
-    ax.pcolormesh(M_, T_, Z_p, cmap = mp.cm.summer, linewidth = 1E-8, zorder = 0)
+    ax.pcolormesh(M_, T_, Z_p, cmap = mp.cm.summer, linewidth = 1E-8, zorder = 0, rasterized=True)
 
     # Shadow the regions where the probability is larger than 0.5
 
@@ -602,4 +602,85 @@ def fig_pvspcol(ax, data_dir, title_text, label_text, y_axis, y_label):
     
     ax.set_xlabel(r'freq. in the pool of colonizers ($p_1$)', fontsize = 16)
     
+    return ax
+
+
+# Figure of the transition between distributions shapes
+
+def fig_dist(ax, title_text, label_text, y_axis, data):
+
+    # Load data
+    
+    N = np.loadtxt(data+'N.txt')
+
+    M_min, M_max = np.loadtxt(data+'Mmin.txt'), np.loadtxt(data+'Mmax.txt')
+
+    T_min, T_max = np.loadtxt(data+'Tmin.txt'), np.loadtxt(data+'Tmax.txt')
+
+    # Create ranges of microbial frequency (x_i) and host death 't' rate
+
+    M, T = [], []
+
+    for i in np.arange(M_min, M_max+1): M.extend(np.arange(1, 10, 2)*np.power(10., i))
+
+    for i in np.arange(T_min, T_max+1): T.extend(np.arange(1, 10, 2)*np.power(10., i))
+    
+    m_ind = 20 # equivalent to m = 1E-3
+    
+    n = np.arange(N + 1) / N
+    
+    # Load probability densities
+    
+    Z_Phi = np.zeros((len(T), int(N + 1)))
+    
+    for t_ind in range(len(T)):
+        
+        Z_Phi[t_ind, :] = np.loadtxt(data+'/Phi/%i_%i.txt'%(m_ind, t_ind))
+    
+    # Set the values of probability smaller than a threshold, equal to zero
+
+    Z_Phi[Z_Phi < 1E-9] = 1E-9
+    
+    # Compute the log10 of the data
+    
+    Z_Phi = np.log10(np.abs(Z_Phi))     
+
+    # Create 2D space
+
+    n_, T_ = np.meshgrid(n[1:], T)       
+
+    # Set log10 scale of axes
+
+    ax.set_xscale('log')
+
+    ax.set_yscale('log')
+    
+    # Plot the difference btw. distributions
+
+    ax.pcolormesh(n_, T_, Z_Phi[:,1:], cmap = mp.cm.jet, linewidth = 1E-8, zorder = 0, vmin = -9, vmax = 0)
+
+    # Plot lines to indicate transitions of modality
+    
+    modetype = np.loadtxt(data+'modetype.txt', delimiter=',')[:, m_ind]
+    
+    for mode in np.unique(modetype):
+                
+        ax.axhline(T[np.where(modetype == mode)[0][-1]], color = 'k', linewidth = 2.)
+    
+    # Set the x tick labels
+
+    ax.set_xticklabels(['', r'$10^{-4}$',r'$10^{-3}$',r'$10^{-2}$',r'$10^{-1}$',''])
+
+    # Set title, panel label and axes labels
+
+    ax.set_title(title_text, fontsize = 16, fontweight = 'bold', pad = 10)
+
+    ax.text(-0.03, 1.03, label_text, fontsize = 25, fontweight = 'bold', transform = ax.transAxes)
+
+    if y_axis == True: ax.set_ylabel(r'prob. of host death ($\tau$)', fontsize = 16)
+
+    if y_axis != True: ax.yaxis.set_ticklabels([])
+
+    ax.set_xlabel(r'freq. in hosts ($x_1$)', fontsize = 16)
+        
     return ax
